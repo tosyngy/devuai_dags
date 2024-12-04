@@ -16,8 +16,8 @@ async def create_dag(payload: DAGPayload):
         )
 
     # Convert retry_delay to timedelta for consistency
-    payload_dict = payload.dict()
-    payload_dict["retry_delay"] = timedelta(minutes=payload.retry_delay)
+    payload_dict = payload.model_dump()
+    # payload_dict["retry_delay"] = timedelta(minutes=payload.retry_delay)
 
     # Validate the DAG data before storing
     try:

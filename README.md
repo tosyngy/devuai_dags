@@ -1,5 +1,7 @@
+# DevuAI assessment
+This code is just for demonstration purpose.
 
-# Key tasks:
+## Key tasks:
 Please see the problem statement below and submit by EOD Thursday (Dec 5). 
 Provide time availability (week of December 9) to review your code with the team.
 The problem statement
@@ -11,3 +13,19 @@ The problem statement
 
 4. The goal of this exercise is to demonstrate the ability to understand business requirements and software documentation and create clear documentation. Keep your implementation as simple and clear as possible.
 
+
+## Implementation Requirement
+1. Python 3.7+
+2. Uvicorn (for running the API)
+3. FastAPI
+4. Pytest
+
+## Installation
+- Run `pip install fastapi uvicorn pytest`
+- Run `pip install -r requirements.txt`
+
+## Exexution
+- uvicorn app.main:app --reload
+
+## Run Test Cases
+- pytest tests/

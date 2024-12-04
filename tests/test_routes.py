@@ -12,7 +12,7 @@ def test_create_dag():
             "description": "Test",
             "retries": 3,
             "retry_delay": 5,
-            "start_date": "2023-12-01T00:00:00",
+            "start_date": "2025-01-01T00:00:00",
             "schedule_interval": "@daily",
             "catchup": False
         }
@@ -23,6 +23,23 @@ def test_create_dag():
 def test_get_dag_not_found():
     response = client.get("/dags/nonexistent_dag")
     assert response.status_code == 404
+
+def test_create_dag_with_past_start_date():
+    response = client.post(
+        "/dags",
+        json={
+            "dag_id": "past_start_date_dag",
+            "owner": "TestOwner",
+            "description": "A test DAG with past start date",
+            "retries": 3,
+            "retry_delay": 5,  # Integer in minutes
+            "start_date": "2020-01-01T00:00:00",  # Past date
+            "schedule_interval": "@daily",
+            "catchup": False
+        }
+    )
+    assert response.status_code == 400
+    assert "start_date cannot be in the past" in response.json()["detail"]
 
 
 def test_create_dag_invalid_schedule_interval():
@@ -40,7 +57,7 @@ def test_create_dag_invalid_schedule_interval():
         }
     )
     assert response.status_code == 400
-    assert "Invalid schedule_interval format." in response.json()["detail"]
+    assert "Invalid data: Invalid schedule interval format." in response.json()["detail"]
 
 def test_create_dag_invalid_retry_delay():
     response = client.post(
@@ -56,8 +73,8 @@ def test_create_dag_invalid_retry_delay():
             "catchup": False
         }
     )
-    assert response.status_code == 400
-    assert "retry_delay must be a timedelta object." in response.json()["detail"]
+    assert response.status_code == 422
+    assert "retry_delay must be a valid integer" in response.json()["detail"]
 
 def test_get_dag_with_data_issue():
     from app.database import mock_dags

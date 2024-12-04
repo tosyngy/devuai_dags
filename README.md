@@ -21,11 +21,11 @@ The problem statement
 4. Pytest
 
 ## Installation
-- Run `pip install fastapi uvicorn pytest`
 - Run `pip install -r requirements.txt`
 
 ## Exexution
-- uvicorn app.main:app --reload
+- Run `uvicorn app.main:app --reload`
+- If you get "uvicorn not install" run `sudo apt install uvicorn` on linux terminal and try again
 
 ## Run Test Cases
-- pytest tests/
+- Run `pytest tests/`
